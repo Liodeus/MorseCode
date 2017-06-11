@@ -7,4 +7,8 @@ import function as fun
 # args = sys.argv# print(args)
 userInput = input("Enter something to cypher : ").upper()
 
-print(fun.cypher(userInput))
+test = fun.cypher(userInput)
+test2 = fun.decypher(test)
+
+print(test)
+print(test2)

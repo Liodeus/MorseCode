@@ -26,7 +26,7 @@ def cypher(stringToCypher):
 
         # Undefined case
         else:
-            stringCypher += '|'
+            stringCypher += ' |'
 
     return stringCypher
 
@@ -34,5 +34,27 @@ def cypher(stringToCypher):
 # Function decypher take a string as parameter
 def decypher(stringToDecypher):
     stringDecypher = " "
+
+    # Split morse code
+    wordMorse = stringToDecypher.split(" ")
+
+    # For each word in wordMorse
+    for word in wordMorse:
+
+        # Alphabet case
+        if word in m.morseToAlphabet:
+            stringDecypher += m.morseToAlphabet[word]
+
+        # Number case
+        elif word in m.morseToNumbers:
+            stringDecypher += m.morseToNumbers[word]
+
+        # Punctuation case
+        elif word in m.morseToPunctuation:
+            stringDecypher += m.morseToPunctuation[word]
+
+        # Undefined case
+        else:
+            stringDecypher += ' '
 
     return stringDecypher
