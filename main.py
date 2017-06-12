@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # - * -coding: utf - 8 - * -
 
-# import sys
+import sys
 import function as fun
 
-# args = sys.argv# print(args)
-userInput = input("Enter something to cypher : ").upper()
+args = sys.argv
 
-test = fun.cypher(userInput)
-test2 = fun.decypher(test)
-
-print(test)
-print(test2)
+if len(args) >= 2:
+    print("Too many arguments")
+else:
+    fun.choiseUser()

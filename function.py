@@ -58,3 +58,70 @@ def decypher(stringToDecypher):
             stringDecypher += ' '
 
     return stringDecypher
+
+
+# Function that display what command you can use
+def choiseUser():
+    # Command
+    print("[1] cypher")
+    print("[2] decypher")
+    print("[3] help")
+    print("[4] exit")
+    print()
+
+    choiceUser = ""
+
+    # Exit the program if user type -> exit
+    while choiceUser != "exit":
+        choiceUser = input("[Morse] > ")
+
+        split = choiceUser.split(' ')
+
+        # User want to cypher
+        if split[0] == "cypher":
+            if len(split) > 1:
+                split.remove("cypher")
+                print(cypher(' '.join(split).upper()))
+            else:
+                print("---------------------------------------")
+                print("Encrypt the sentence you enter \n")
+                print("Usage : cypher [values]")
+                print("---------------------------------------")
+
+        # User want to decypher
+        elif split[0] == "decypher":
+            if len(split) > 1:
+                split.remove("decypher")
+                print(decypher(' '.join(split).upper()))
+            else:
+                print("---------------------------------------")
+                print("Decrypt the sentence you enter \n")
+                print("Usage : decypher [values]")
+                print("---------------------------------------")
+
+        # User need help
+        elif split[0] == "help":
+            if len(split) == 1:
+                print("-------------------------------------------")
+                print("cypher       Encrypt the sentence you enter")
+                print("decypher     Decrypt the sentence you enter")
+                print("help         Displays this menu            ")
+                print("exit         Exits the program             ")
+                print("-------------------------------------------")
+            elif len(split) == 2:
+                if split[1] == "cypher":
+                    print("---------------------------------------")
+                    print("Encrypt the sentence you enter \n")
+                    print("Usage : cypher [values]")
+                    print("---------------------------------------")
+                elif split[1] == "decypher":
+                    print("---------------------------------------")
+                    print("Decrypt the sentence you enter \n")
+                    print("Usage : decypher [values]")
+                    print("---------------------------------------")
+                else:
+                    print("[!] No help on", split[1])
+
+        # Error
+        else:
+            print(split[0], ": not found")
