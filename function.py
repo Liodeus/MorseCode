@@ -1,10 +1,11 @@
 import morseCodeTable as m
 import readline
 import sys
+import os
 
 
 # Function cypher take a string as parameter
-def cypher(stringToCypher):
+def cypherSentence(stringToCypher):
     stringCypher = " "
 
     # For each letter in stringToCypher
@@ -32,9 +33,30 @@ def cypher(stringToCypher):
 
     return stringCypher
 
+# Function cypherFile take 2 parameters
+# pathFile -> the file you want to cypher
+# outputPath -> the file you want to save the cypher
+
+
+def cypherFile(pathFile, outputPath):
+    if os.path.exists(pathFile):
+        try:
+            file = open(outputPath, "w")
+            with open(pathFile, "r") as inFile:
+                for line in inFile:
+                    # Write the cypher in outputPath
+                    file.write(cypherSentence(line.upper()))
+            file.close()
+        except:
+            print("%sError the output path you gave is wrong !%s" %
+                  (Colors.R, Colors.N))
+
+    else:
+        print("%sError the path you gave is wrong !%s" % (Colors.R, Colors.N))
+
 
 # Function decypher take a string as parameter
-def decypher(stringToDecypher):
+def decypherSentence(stringToDecypher):
     stringDecypher = " "
 
     # Split morse code
@@ -62,6 +84,26 @@ def decypher(stringToDecypher):
     return stringDecypher
 
 
+# Function decypherFile take 2 parameters
+# pathFile -> the file you want to decypher
+# outputPath -> the file you want to save the decypher
+def decypherFile(pathFile, outputPath):
+    if os.path.exists(pathFile):
+        try:
+            file = open(outputPath, "w")
+            with open(pathFile, "r") as inFile:
+                for line in inFile:
+                    # Write the decypher in outputPath
+                    file.write(decypherSentence(line.upper()))
+            file.close()
+        except:
+            print("%sError the output path you gave is wrong !%s" %
+                  (Colors.R, Colors.N))
+
+    else:
+        print("%sError the path you gave is wrong !%s" % (Colors.R, Colors.N))
+
+
 # Function that display what command you can use
 # Interface and colors from : [recon-ng v4.9.1, Tim Tomes (@LaNMaSteR53)]
 def choiseUser():
@@ -69,8 +111,8 @@ def choiseUser():
         "%s                    [Morse, Thibault Galbourdin (github.com/Liodeus)]" % (Colors.O))
 
     # Commands
-    print("%s[1] cypher" % (Colors.B))
-    print("%s[2] decypher" % (Colors.B))
+    print("%s[1] cypher -n | -f" % (Colors.B))
+    print("%s[2] decypher -n | -f" % (Colors.B))
     print("%s[3] help" % (Colors.B))
     print("%s[4] exit" % (Colors.B))
     print("%s" % (Colors.N))
@@ -91,34 +133,56 @@ def choiseUser():
 
         # User want to cypher
         if split[0] == "cypher":
-            if len(split) > 1:
-                split.remove("cypher")
-                print(cypher(' '.join(split).upper()))
-            else:
+            try:
+                # Cypher a sentence
+                if(split[1] == "-n"):
+                    split.remove("cypher")
+                    split.remove("-n")
+                    print(cypherSentence(' '.join(split).upper()))
+
+                # Cypher a file
+                elif(split[1] == "-f"):
+                    cypherFile(split[2], split[3])
+
+            except:
                 print(delimiter)
-                print("Encrypt the sentence you enter \n")
-                print("Usage : cypher [values]")
+                print("cypher -n")
+                print("    Encrypt a sentence")
+                print("    Usage: cypher -n [sentence] \n")
+                print("cypher -f")
+                print("    Encrypt a file")
+                print("    Usage: cypher -f <pathFile> <outputPath>\n")
                 print(delimiter)
 
         # User want to decypher
         elif split[0] == "decypher":
-            if len(split) > 1:
-                split.remove("decypher")
-                print(decypher(' '.join(split).upper()))
-            else:
+            try:
+                # Decypher a sentence
+                if(split[1] == "-n"):
+                    split.remove("decypher")
+                    split.remove("-n")
+                    print(decypherSentence(' '.join(split).upper()))
+
+                # Decypher a file
+                elif(split[1] == "-f"):
+                    decypherFile(split[2], split[3])
+            except:
                 print(delimiter)
-                print("Decrypt the sentence you enter \n")
-                print("Usage : decypher [values]")
+                print("decypher -n")
+                print("    Decrypt a sentence")
+                print("    Usage : decypher -n [sentence]\n")
+                print("decypher -f")
+                print("    Decrypt a file")
+                print("    Usage : decypher -f <pathFile> <outputPath>\n")
                 print(delimiter)
 
         # User need help
         elif split[0] == "help":
-
             if len(split) == 1:
                 print("Commands (type [help <topic>):             ")
                 print(delimiter)
-                print("cypher       Encrypt the sentence you enter")
-                print("decypher     Decrypt the sentence you enter")
+                print("cypher       Encrypt the sentence or file you enter")
+                print("decypher     Decrypt the sentence or file you enter")
                 print("help         Displays this menu            ")
                 print("exit         Exit the program              ")
                 print(delimiter)
@@ -126,8 +190,12 @@ def choiseUser():
             elif len(split) == 2:
                 if split[1] == "cypher":
                     print(delimiter)
-                    print("Encrypt the sentence you enter \n")
-                    print("Usage : cypher [values]")
+                    print("cypher -n")
+                    print("    Encrypt the sentence you enter")
+                    print("    Usage: cypher -n [sentence] \n")
+                    print("cypher -f")
+                    print("    Encrypt a file")
+                    print("    Usage: cypher -f <pathFile> <outputPath> \n")
                     print(delimiter)
                 elif split[1] == "decypher":
                     print(delimiter)
