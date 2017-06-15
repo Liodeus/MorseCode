@@ -179,7 +179,7 @@ def choiseUser():
         # User need help
         elif split[0] == "help":
             if len(split) == 1:
-                print("Commands (type [help <topic>):             ")
+                print("Commands (type [help <topic>]):             ")
                 print(delimiter)
                 print("cypher       Encrypt the sentence or file you enter")
                 print("decypher     Decrypt the sentence or file you enter")
